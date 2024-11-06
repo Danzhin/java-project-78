@@ -1,13 +1,13 @@
 package hexlet.code.schemas;
 
-class StringSchema {
+public class StringSchema {
 
-    private boolean isRequired = false;
-    private int minLength = 0;
-    private String substring = "";
+    private boolean requiredFilling = false;
+    private Integer minLength = null;
+    private String requiredSubstring = null;
 
     public StringSchema required() {
-        isRequired = true;
+        requiredFilling = true;
         return this;
     }
 
@@ -17,28 +17,24 @@ class StringSchema {
     }
 
     public StringSchema contains(String substring) {
-        this.substring = substring;
+        requiredSubstring = substring;
         return this;
     }
 
     public boolean isValid(String value) {
-
-        if (isRequired) {
+        if (requiredFilling) {
             if (value == null || value.isEmpty()) {
                 return false;
             }
         }
-
-        if (minLength != 0) {
+        if (minLength != null) {
             if (value.length() < minLength) {
                 return false;
             }
         }
-
-        if (!value.isEmpty()) {
-            return value.contains(substring);
+        if (requiredSubstring != null) {
+            return value.contains(requiredSubstring);
         }
-
         return true;
     }
 }
