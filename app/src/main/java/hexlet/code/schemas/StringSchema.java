@@ -3,10 +3,12 @@ package hexlet.code.schemas;
 public class StringSchema {
 
     private boolean requiredFilling = false;
+
     private boolean hasMinLength = false;
+    private int minLength;
+
     private boolean hasRequiredSubstring = false;
-    private Integer minLength = null;
-    private String requiredSubstring = null;
+    private String requiredSubstring;
 
     public StringSchema required() {
         requiredFilling = true;
@@ -25,19 +27,19 @@ public class StringSchema {
         return this;
     }
 
-    public boolean isValid(String value) {
+    public boolean isValid(String string) {
         if (requiredFilling) {
-            if (value == null || value.isEmpty()) {
+            if (string == null || string.isEmpty()) {
                 return false;
             }
         }
         if (hasMinLength) {
-            if (value.length() < minLength) {
+            if (string.length() < minLength) {
                 return false;
             }
         }
         if (hasRequiredSubstring) {
-            return value.contains(requiredSubstring);
+            return string.contains(requiredSubstring);
         }
         return true;
     }
