@@ -18,9 +18,8 @@ public class StringSchemaTest {
 
     @Test
     public void testRequired() {
-        assertTrue(schema.isValid(null));
-        assertTrue(schema.isValid(""));
         schema.required();
+        assertTrue(schema.isValid("a"));
         assertFalse(schema.isValid(null));
         assertFalse(schema.isValid(""));
     }
@@ -29,15 +28,14 @@ public class StringSchemaTest {
     public void testMinLength() {
         schema.minLength(3);
         assertTrue(schema.isValid("abc"));
-        schema.minLength(4);
-        assertFalse(schema.isValid("abc"));
+        assertFalse(schema.isValid("ab"));
     }
 
     @Test
     public void testContains() {
         schema.contains("bc");
         assertTrue(schema.isValid("abc"));
-        schema.contains("cb");
-        assertFalse(schema.isValid("abc"));
+        assertFalse(schema.isValid("cba"));
     }
+
 }

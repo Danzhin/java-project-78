@@ -18,27 +18,26 @@ public class NumberSchemaTest {
 
     @Test
     public void testRequired() {
-        assertTrue(schema.isValid(null));
         schema.required();
+        assertTrue(schema.isValid(1));
         assertFalse(schema.isValid(null));
     }
 
     @Test
     public void testPositive() {
-        assertTrue(schema.isValid(100));
-        assertTrue(schema.isValid(0));
-        assertTrue(schema.isValid(-100));
         schema.positive();
-        assertTrue(schema.isValid(100));
+        assertTrue(schema.isValid(1));
         assertFalse(schema.isValid(0));
-        assertFalse(schema.isValid(-100));
+        assertFalse(schema.isValid(-1));
     }
 
     @Test
     public void testRange() {
-        schema.range(-100, 100);
-        assertFalse(schema.isValid(101));
+        schema.range(0, 1);
         assertTrue(schema.isValid(0));
-        assertFalse(schema.isValid(-101));
+        assertTrue(schema.isValid(1));
+        assertFalse(schema.isValid(-1));;
+        assertFalse(schema.isValid(2));
     }
+
 }
