@@ -2,12 +2,11 @@ package hexlet.code;
 
 import java.util.Map;
 
-public class MapSchema {
+public class MapSchema extends BaseSchema {
 
     private boolean requiredFilling = false;
-
-    private boolean hasMinSize = false;
-    private int minSize;
+    private Integer minSize = null;
+    private Map<Object, BaseSchema> shapeSchemas = null;
 
     public MapSchema required() {
         requiredFilling = true;
@@ -15,21 +14,31 @@ public class MapSchema {
     }
 
     public MapSchema sizeof(int size) {
-        hasMinSize = true;
         minSize = size;
         return this;
     }
 
-    public boolean isValid(Map map) {
-        if (requiredFilling) {
-            if (map == null) {
-                return false;
+    public MapSchema shape(Map<Object, BaseSchema> shapeSchemas) {
+        this.shapeSchemas = shapeSchemas;
+        return this;
+    }
+
+    @Override
+    public boolean isValid(Object value) {
+        Map<?, ?> map = (Map<?, ?>) value;
+        if (requiredFilling && map == null) {
+            return false;
+        }
+        if (shapeSchemas != null) {
+            for (Map.Entry<Object, BaseSchema> entry : shapeSchemas.entrySet()) {
+                Object property = entry.getKey();
+                BaseSchema shapeSchema = entry.getValue();
+                if (!shapeSchema.isValid(map.get(property))) {
+                    return false;
+                }
             }
         }
-        if (hasMinSize) {
-            return map.size() >= minSize;
-        }
-        return true;
+        return minSize == null || map.size() >= minSize;
     }
 
 }
