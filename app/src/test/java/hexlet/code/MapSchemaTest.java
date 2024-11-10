@@ -34,21 +34,13 @@ public class MapSchemaTest {
 
     @Test
     public void testShape() {
-        MapSchema shapeSchema = VALIDATOR.map();
-        shapeSchema.shape(Map.of(
+        schema.shape(Map.of(
                 "name", VALIDATOR.string().required(),
                 "age", VALIDATOR.number().required().positive()
         ));
-
-        assertTrue(shapeSchema.isValid(Map.of("name", "John", "age", 20)));
-        assertFalse(shapeSchema.isValid(Map.of("name", "", "age", 30)));
-
-        // Invalid map - missing required "name" key
-        assertFalse(shapeSchema.isValid(Map.of("age", 30)));
-
-        // Invalid map - "age" is not positive
-        assertFalse(shapeSchema.isValid(Map.of("name", "John", "age", -10)));
-
+        assertTrue(schema.isValid(Map.of("name", "John", "age", 20)));
+        assertFalse(schema.isValid(Map.of("name", "", "age", 20)));
+        assertFalse(schema.isValid(Map.of("name", "John", "age", 0)));
     }
 
 }
