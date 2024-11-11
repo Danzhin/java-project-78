@@ -6,7 +6,7 @@ public class MapSchema extends BaseSchema<Map<String, Object>> {
 
     private boolean requiredFilling = false;
     private Integer minSize = null;
-    private Map<String, BaseSchema<Object>> shapeSchemas = null;
+    private Map<String, BaseSchema> shapeSchemas = null;
 
     public MapSchema required() {
         requiredFilling = true;
@@ -18,7 +18,7 @@ public class MapSchema extends BaseSchema<Map<String, Object>> {
         return this;
     }
 
-    public MapSchema shape(Map<String, BaseSchema<Object>> shapeSchemas) {
+    public MapSchema shape(Map<String, BaseSchema> shapeSchemas) {
         this.shapeSchemas = shapeSchemas;
         return this;
     }
@@ -29,9 +29,9 @@ public class MapSchema extends BaseSchema<Map<String, Object>> {
             return false;
         }
         if (shapeSchemas != null) {
-            for (Map.Entry<String, BaseSchema<?>> entry : shapeSchemas.entrySet()) {
+            for (Map.Entry<String, BaseSchema> entry : shapeSchemas.entrySet()) {
                 String property = entry.getKey();
-                BaseSchema<?> shapeSchema = entry.getValue();
+                BaseSchema<Object> shapeSchema = entry.getValue();
                 if (!shapeSchema.isValid(map.get(property))) {
                     return false;
                 }
