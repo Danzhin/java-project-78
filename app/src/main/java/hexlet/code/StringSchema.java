@@ -1,6 +1,6 @@
 package hexlet.code;
 
-public class StringSchema extends BaseSchema {
+public class StringSchema extends BaseSchema<String>  {
 
     private boolean requiredFilling = false;
     private Integer minLength = null;
@@ -22,8 +22,7 @@ public class StringSchema extends BaseSchema {
     }
 
     @Override
-    public boolean isValid(Object value) {
-        String string = (String) value;
+    public boolean isValid(String string) {
         if (requiredFilling && (string == null || string.isEmpty())) {
             return false;
         }
