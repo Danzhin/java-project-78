@@ -23,13 +23,10 @@ public class StringSchema extends BaseSchema<String>  {
 
     @Override
     public boolean isValid(String string) {
-        if (requiredFilling && (string == null || string.isEmpty())) {
-            return false;
-        }
-        if (minLength != null && string.length() < minLength) {
-            return false;
-        }
-        return requiredSubstring == null || string.contains(requiredSubstring);
+        return (!requiredFilling || (string != null && !string.isEmpty()))
+                && ((minLength == null || string.length() >= minLength)
+                && (requiredSubstring == null || string.contains(requiredSubstring)));
+
     }
 
 }

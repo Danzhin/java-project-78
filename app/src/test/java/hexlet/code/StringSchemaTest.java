@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StringSchemaTest {
 
-    private final Validator VALIDATOR = new Validator();
+    private final Validator validator = new Validator();
     private StringSchema schema;
 
     @BeforeEach
     public void beforeEach() {
-        schema = VALIDATOR.string();
+        schema = validator.string();
     }
 
     @Test

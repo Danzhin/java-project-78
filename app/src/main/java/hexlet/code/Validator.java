@@ -10,8 +10,8 @@ public class Validator {
         return new NumberSchema();
     }
 
-    public MapSchema map() {
-        return new MapSchema();
+    public <T1, T2> MapSchema<T1, T2> map() {
+        return new MapSchema<>();
     }
 
 }

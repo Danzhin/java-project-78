@@ -2,42 +2,42 @@ package hexlet.code;
 
 import java.util.Map;
 
-public class MapSchema extends BaseSchema<Map<String, Object>> {
+public class MapSchema<T1, T2> extends BaseSchema<Map<T1, T2>> {
 
     private boolean requiredFilling = false;
     private Integer minSize = null;
-    private Map<String, BaseSchema> shapeSchemas = null;
+    private Map<T1, BaseSchema<T2>> shapeSchemes = null;
 
-    public MapSchema required() {
+    public MapSchema<T1, T2> required() {
         requiredFilling = true;
         return this;
     }
 
-    public MapSchema sizeof(int size) {
+    public MapSchema<T1, T2> sizeof(int size) {
         minSize = size;
         return this;
     }
 
-    public MapSchema shape(Map<String, BaseSchema> shapeSchemas) {
-        this.shapeSchemas = shapeSchemas;
+    public MapSchema<T1, T2> shape(Map<T1, BaseSchema<T2>> schemes) {
+        shapeSchemes = schemes;
         return this;
     }
 
-    @Override
-    public boolean isValid(Map<String, Object> map) {
-        if (requiredFilling && map == null) {
-            return false;
-        }
-        if (shapeSchemas != null) {
-            for (Map.Entry<String, BaseSchema> entry : shapeSchemas.entrySet()) {
-                String property = entry.getKey();
-                BaseSchema<Object> shapeSchema = entry.getValue();
-                if (!shapeSchema.isValid(map.get(property))) {
-                    return false;
-                }
+    public boolean checkShape(Map<T1, T2> map) {
+        for (T1 property : shapeSchemes.keySet()) {
+            BaseSchema<T2> schema = shapeSchemes.get(property);
+            if (!schema.isValid(map.get(property))) {
+                return false;
             }
         }
-        return minSize == null || map.size() >= minSize;
+        return true;
+    }
+
+    @Override
+    public boolean isValid(Map<T1, T2> map) {
+        return (!requiredFilling || map != null)
+                && (minSize == null || map.size() >= minSize)
+                && (shapeSchemes == null || checkShape(map));
     }
 
 }

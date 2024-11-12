@@ -10,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MapSchemaTest {
 
-    private final Validator VALIDATOR = new Validator();
-    private MapSchema schema;
+    private final Validator validator = new Validator();
+    private MapSchema<String, String> schema;
 
     @BeforeEach
     public void beforeEach() {
-        schema = VALIDATOR.map();
+        schema = validator.map();
     }
 
     @Test
@@ -27,20 +27,16 @@ public class MapSchemaTest {
 
     @Test
     public void testSizeof() {
-        schema.sizeof(1);
-        assertTrue(schema.isValid(Map.of("key1", "value1")));
-        assertFalse(schema.isValid(Map.of()));
+        schema.sizeof(2);
+        assertTrue(schema.isValid(Map.of("key1", "value1", "key2", "value2")));
+        assertFalse(schema.isValid(Map.of("key1", "value1")));
     }
 
     @Test
     public void testShape() {
-        schema.shape(Map.of(
-                "name", VALIDATOR.string().required(),
-                "age", VALIDATOR.number().required().positive()
-        ));
-        assertTrue(schema.isValid(Map.of("name", "John", "age", 20)));
-        assertFalse(schema.isValid(Map.of("name", "", "age", 20)));
-        assertFalse(schema.isValid(Map.of("name", "John", "age", 0)));
+        schema.shape(Map.of("name", validator.string().required()));
+        assertTrue(schema.isValid(Map.of("name", "John")));
+        assertFalse(schema.isValid(Map.of("name", "")));
     }
 
 }

@@ -17,21 +17,17 @@ public class NumberSchema extends BaseSchema<Integer> {
         return this;
     }
 
-    public NumberSchema range(Integer minValue, Integer maxValue) {
-        this.minValue = minValue;
-        this.maxValue = maxValue;
+    public NumberSchema range(int value1, int value2) {
+        minValue = value1;
+        maxValue = value2;
         return this;
     }
 
     @Override
     public boolean isValid(Integer number) {
-        if (requiredFilling && number == null) {
-            return false;
-        }
-        if (isPositive && number <= 0) {
-            return false;
-        }
-        return minValue == null || (number >= minValue) && (number <= maxValue);
+        return (!requiredFilling || number != null)
+                && ((!isPositive || number > 0)
+                && (minValue == null || (number >= minValue) && (number <= maxValue)));
     }
 
 }
