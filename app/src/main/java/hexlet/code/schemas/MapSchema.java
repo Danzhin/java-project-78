@@ -2,30 +2,30 @@ package hexlet.code.schemas;
 
 import java.util.Map;
 
-public class MapSchema<T1, T2> extends BaseSchema<Map<T1, T2>> {
+public final class MapSchema<T> extends BaseSchema<Map<T, T>> {
 
     private boolean requiredFilling = false;
     private Integer minSize = null;
-    private Map<T1, BaseSchema<T2>> shapeSchemes = null;
+    private Map<T, BaseSchema<T>> shapeSchemes = null;
 
-    public MapSchema<T1, T2> required() {
+    public MapSchema<T> required() {
         requiredFilling = true;
         return this;
     }
 
-    public MapSchema<T1, T2> sizeof(int size) {
+    public MapSchema<T> sizeof(int size) {
         minSize = size;
         return this;
     }
 
-    public MapSchema<T1, T2> shape(Map<T1, BaseSchema<T2>> schemes) {
+    public MapSchema<T> shape(Map<T, BaseSchema<T>> schemes) {
         shapeSchemes = schemes;
         return this;
     }
 
-    public boolean checkShape(Map<T1, T2> map) {
-        for (T1 property : shapeSchemes.keySet()) {
-            BaseSchema<T2> schema = shapeSchemes.get(property);
+    public boolean checkShape(Map<T, T> map) {
+        for (T property : shapeSchemes.keySet()) {
+            BaseSchema<T> schema = shapeSchemes.get(property);
             if (!schema.isValid(map.get(property))) {
                 return false;
             }
@@ -34,7 +34,7 @@ public class MapSchema<T1, T2> extends BaseSchema<Map<T1, T2>> {
     }
 
     @Override
-    public boolean isValid(Map<T1, T2> map) {
+    public boolean isValid(Map<T, T> map) {
         return (!requiredFilling || map != null)
                 && (minSize == null || map.size() >= minSize)
                 && (shapeSchemes == null || checkShape(map));

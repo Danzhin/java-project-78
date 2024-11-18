@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class MapSchemaTest {
 
     private final Validator validator = new Validator();
-    private MapSchema<String, String> schema;
+    private MapSchema<String> schema;
 
     @BeforeEach
     public void beforeEach() {
