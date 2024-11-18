@@ -7,13 +7,13 @@ public final class StringSchema extends BaseSchema<String> {
         return this;
     }
 
-    public StringSchema minLength(int inputMinLength) {
-        addCheck("minLength", str -> str.length() >= inputMinLength);
+    public StringSchema minLength(int minLength) {
+        addCheck("minLength", str -> str.length() >= minLength);
         return this;
     }
 
-    public StringSchema contains(String inputSubstring) {
-        addCheck("contains", str -> str.contains(inputSubstring));
+    public StringSchema contains(String substring) {
+        addCheck("contains", str -> str.contains(substring));
         return this;
     }
 
