@@ -1,33 +1,22 @@
 package hexlet.code.schemas;
 
+import java.util.Objects;
+
 public final class NumberSchema extends BaseSchema<Integer> {
 
-    private boolean requiredFilling = false;
-    private boolean isPositive = false;
-    private Integer minValue = null;
-    private Integer maxValue = null;;
-
     public NumberSchema required() {
-        requiredFilling = true;
+        addCheck(checkID++, Objects::nonNull);
         return this;
     }
 
     public NumberSchema positive() {
-        isPositive = true;
+        addCheck(checkID++, num -> num > 0);
         return this;
     }
 
-    public NumberSchema range(int value1, int value2) {
-        minValue = value1;
-        maxValue = value2;
+    public NumberSchema range(int inputMinValue, int inputMaxValue) {
+        addCheck(checkID++, num -> num >= inputMinValue && inputMaxValue <= num);
         return this;
-    }
-
-    @Override
-    public boolean isValid(Integer number) {
-        return (!requiredFilling || number != null)
-                && ((!isPositive || number > 0)
-                && (minValue == null || (number >= minValue) && (number <= maxValue)));
     }
 
 }
