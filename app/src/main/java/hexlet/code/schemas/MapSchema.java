@@ -3,17 +3,21 @@ package hexlet.code.schemas;
 import java.util.Map;
 import java.util.Objects;
 
-public final class MapSchema<T> extends BaseSchema<Map<?, ?>> {
+public class MapSchema extends BaseSchema<Map<Object, Object>> {
 
-    public MapSchema required() {
-        addCheck("required", Objects::nonNull);
+    public final MapSchema required() {
+        addChecks(Objects::nonNull);
         return this;
     }
 
-    public MapSchema sizeof(int size) {
-        addCheck("sizeof", map -> map.size() == size);
+    public final MapSchema sizeof(int number) {
+        addChecks(map -> map.size() == number);
         return this;
     }
 
+    public final MapSchema shape(Map<String, BaseSchema<Object>> schemas) {
+        addChecks(value -> schemas.entrySet().stream().allMatch(e -> e.getValue().isValid(value.get(e.getKey()))));
+        return this;
+    }
 
 }
