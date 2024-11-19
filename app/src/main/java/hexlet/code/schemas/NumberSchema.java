@@ -18,4 +18,5 @@ public final class NumberSchema extends BaseSchema<Integer> {
         addChecks(num -> minValue <= num && num <= maxValue);
         return this;
     }
+
 }
