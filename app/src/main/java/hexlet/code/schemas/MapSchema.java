@@ -3,7 +3,7 @@ package hexlet.code.schemas;
 import java.util.Map;
 import java.util.Objects;
 
-public final class MapSchema<T> extends BaseSchema<Map<T, T>> {
+public final class MapSchema<T> extends BaseSchema<Map<? extends T, ? extends T>> {
 
     public MapSchema<T> required() {
         addChecks(Objects::nonNull);
