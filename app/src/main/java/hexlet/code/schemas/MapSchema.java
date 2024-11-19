@@ -3,26 +3,26 @@ package hexlet.code.schemas;
 import java.util.Map;
 import java.util.Objects;
 
-public final class MapSchema<T1, T2> extends BaseSchema<Map<T1, T2>> {
+public final class MapSchema<T> extends BaseSchema<Map<T, T>> {
 
-    public MapSchema<T1, T2> required() {
+    public MapSchema<T> required() {
         addChecks(Objects::nonNull);
         return this;
     }
 
-    public MapSchema<T1, T2> sizeof(int number) {
+    public MapSchema<T> sizeof(int number) {
         addChecks(map -> map.size() == number);
         return this;
     }
 
-    public MapSchema<T1, T2> shape(Map<T1, BaseSchema<T2>> schemes) {
+    public MapSchema<T> shape(Map<T, BaseSchema<T>> schemes) {
         addChecks(map -> {
             if (map == null || schemes == null) {
                 return true;
             }
-            for (Map.Entry<T1, BaseSchema<T2>> entry : schemes.entrySet()) {
-                T1 key = entry.getKey();
-                BaseSchema<T2> schema = entry.getValue();
+            for (Map.Entry<T, BaseSchema<T>> entry : schemes.entrySet()) {
+                T key = entry.getKey();
+                BaseSchema<T> schema = entry.getValue();
 
                 if (!map.containsKey(key) || !schema.isValid(map.get(key))) {
                     return false;
