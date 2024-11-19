@@ -6,16 +6,14 @@ import java.util.function.Predicate;
 
 public abstract class BaseSchema <T> {
 
-    protected int checkID = 0;
+    private final Map<String, Predicate<T>> checks = new HashMap<>();
 
-    private final Map<Integer, Predicate<T>> checks = new HashMap<>();
-
-    protected final void addCheck(Integer checkID, Predicate<T> predicate) {
-        this.checks.put(checkID, predicate);
+    protected final void addCheck(String checkName, Predicate<T> predicate) {
+        checks.put(checkName, predicate);
     }
 
     public final boolean isValid(T value) {
-        for (Map.Entry<Integer, Predicate<T>> item : checks.entrySet()) {
+        for (Map.Entry<String, Predicate<T>> item : checks.entrySet()) {
             if (!item.getValue().test(value)) {
                 return false;
             }

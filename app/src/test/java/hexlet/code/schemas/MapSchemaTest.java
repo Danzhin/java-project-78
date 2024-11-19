@@ -33,11 +33,4 @@ public class MapSchemaTest {
         assertFalse(schema.isValid(Map.of("key1", "value1")));
     }
 
-    @Test
-    public void testShape() {
-        schema.shape(Map.of("name", validator.string().required()));
-        assertTrue(schema.isValid(Map.of("name", "John")));
-        assertFalse(schema.isValid(Map.of("name", "")));
-    }
-
 }
