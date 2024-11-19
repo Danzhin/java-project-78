@@ -15,14 +15,14 @@ public final class MapSchema<T> extends BaseSchema<Map<? extends T, ? extends T>
         return this;
     }
 
-    public MapSchema<T> shape(Map<T, BaseSchema<T>> schemes) {
+    public MapSchema<T> shape(Map<Object, BaseSchema<Object>> schemes) {
         addChecks(map -> {
             if (map == null || schemes == null) {
                 return true;
             }
-            for (Map.Entry<T, BaseSchema<T>> entry : schemes.entrySet()) {
-                T key = entry.getKey();
-                BaseSchema<T> schema = entry.getValue();
+            for (Map.Entry<Object, BaseSchema<Object>> entry : schemes.entrySet()) {
+                Object key = entry.getKey();
+                BaseSchema<Object> schema = entry.getValue();
 
                 if (!map.containsKey(key) || !schema.isValid(map.get(key))) {
                     return false;
