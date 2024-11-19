@@ -3,7 +3,7 @@ package hexlet.code.schemas;
 import java.util.Map;
 import java.util.Objects;
 
-public final class MapSchema<T> extends BaseSchema<Map<T, T>> {
+public final class MapSchema<T> extends BaseSchema<Map<?, ?>> {
 
     public MapSchema<T> required() {
         addChecks(Objects::nonNull);
@@ -15,9 +15,9 @@ public final class MapSchema<T> extends BaseSchema<Map<T, T>> {
         return this;
     }
 
-    public MapSchema<T> shape(Map<T, BaseSchema<T>> schemas) {
-        addChecks(value -> schemas.entrySet().stream().allMatch(e -> e.getValue().isValid(value.get(e.getKey()))));
-        return this;
-    }
+    //public MapSchema<T> shape(Map<T, BaseSchema<T>> schemas) {
+        //addChecks(value -> schemas.entrySet().stream().allMatch(e -> e.getValue().isValid(value.get(e.getKey()))));
+        //return this;
+    //}
 
 }
