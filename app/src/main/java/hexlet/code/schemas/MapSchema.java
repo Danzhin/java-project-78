@@ -3,7 +3,7 @@ package hexlet.code.schemas;
 import java.util.Map;
 import java.util.Objects;
 
-public final class MapSchema extends BaseSchema<Map<String, Object>> {
+public final class MapSchema extends BaseSchema<Map<?, ?>> {
 
     public MapSchema required() {
         addCheck(Objects::nonNull);
@@ -15,10 +15,10 @@ public final class MapSchema extends BaseSchema<Map<String, Object>> {
         return this;
     }
 
-    public MapSchema shape(Map<String, BaseSchema<Object>> schemes) {
+    public <T> MapSchema shape(Map<String, BaseSchema<T>> schemes) {
         addCheck(map -> schemes.entrySet().stream()
                 .allMatch(entry -> map.containsKey(entry.getKey())
-                        && entry.getValue().isValid(map.get(entry.getKey()))));
+                        && entry.getValue().isValid((T) map.get(entry.getKey()))));
         return this;
     }
 
