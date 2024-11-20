@@ -10,8 +10,8 @@ public final class MapSchema extends BaseSchema<Map<?, ?>> {
         return this;
     }
 
-    public MapSchema sizeof(int number) {
-        addCheck(map -> map.size() == number);
+    public MapSchema sizeof(int size) {
+        addCheck(map -> map != null && map.size() == size);
         return this;
     }
 

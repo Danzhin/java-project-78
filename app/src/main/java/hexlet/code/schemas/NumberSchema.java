@@ -10,12 +10,12 @@ public final class NumberSchema extends BaseSchema<Integer> {
     }
 
     public NumberSchema positive() {
-        addCheck(num -> num > 0);
+        addCheck(num -> num != null && num > 0);
         return this;
     }
 
     public NumberSchema range(int minValue, int maxValue) {
-        addCheck(num -> minValue <= num && num <= maxValue);
+        addCheck(num -> num != null && minValue <= num && num <= maxValue);
         return this;
     }
 
