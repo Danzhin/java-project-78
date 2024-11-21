@@ -13,12 +13,7 @@ public class BaseSchema<T> {
     }
 
     public final boolean isValid(T value) {
-        for (Predicate<T> item : this.checks) {
-            if (!item.test(value)) {
-                return false;
-            }
-        }
-        return true;
+        return checks.stream().allMatch(check -> check.test(value));
     }
 
 }
