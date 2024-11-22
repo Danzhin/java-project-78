@@ -17,8 +17,7 @@ public final class MapSchema extends BaseSchema<Map<?, ?>> {
 
     public MapSchema shape(Map<String, BaseSchema<String>> schemes) {
         addCheck(map -> schemes.entrySet().stream()
-                .allMatch(entry -> map.containsKey(entry.getKey())
-                        && entry.getValue().isValid((String) map.get(entry.getKey()))));
+                .allMatch(entry -> entry.getValue().isValid((String) map.get(entry.getKey()))));
         return this;
     }
 

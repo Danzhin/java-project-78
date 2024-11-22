@@ -20,17 +20,33 @@ public class MapSchemaTest {
     }
 
     @Test
-    public void testRequired() {
+    public void requiredTest() {
         schema.required();
         assertTrue(schema.isValid(Map.of()));
         assertFalse(schema.isValid(null));
     }
 
     @Test
-    public void testSizeof() {
-        schema.sizeof(2);
-        assertTrue(schema.isValid(Map.of("key1", "value1", "key2", "value2")));
-        assertFalse(schema.isValid(Map.of("key1", "value1")));
+    public void sizeofTest() {
+        schema.sizeof(1);
+        assertTrue(schema.isValid(Map.of("key1", "value1")));
+        assertFalse(schema.isValid(Map.of()));
+    }
+
+    @Test
+    public void shapeTest() {
+        schema.shape(Map.of("key1", validator.string().required()));
+        assertTrue(schema.isValid(Map.of("key1", "value1")));
+        assertFalse(schema.isValid(Map.of("key1", "")));
+    }
+
+    @Test
+    public void containsTest() {
+        schema.required().sizeof(1).shape(Map.of("key1", validator.string().required()));
+        assertTrue(schema.isValid(Map.of("key1", "value1")));
+        assertFalse(schema.isValid(null));
+        assertFalse(schema.isValid(Map.of()));
+        assertFalse(schema.isValid(Map.of("key1", "")));
     }
 
 }
