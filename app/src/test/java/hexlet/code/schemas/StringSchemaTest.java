@@ -18,7 +18,7 @@ public class StringSchemaTest {
     }
 
     @Test
-    public void testRequired() {
+    public void requiredTest() {
         schema.required();
         assertTrue(schema.isValid("a"));
         assertFalse(schema.isValid(null));
@@ -26,16 +26,26 @@ public class StringSchemaTest {
     }
 
     @Test
-    public void testMinLength() {
+    public void minLengthTest() {
         schema.minLength(3);
         assertTrue(schema.isValid("abc"));
         assertFalse(schema.isValid("ab"));
     }
 
     @Test
-    public void testContains() {
+    public void containsTest() {
         schema.contains("bc");
         assertTrue(schema.isValid("abc"));
+        assertFalse(schema.isValid("cba"));
+    }
+
+    @Test
+    public void combinationTest() {
+        schema.required().minLength(3).contains("bc");
+        assertTrue(schema.isValid("abc"));
+        assertFalse(schema.isValid(null));
+        assertFalse(schema.isValid(""));
+        assertFalse(schema.isValid("bc"));
         assertFalse(schema.isValid("cba"));
     }
 
