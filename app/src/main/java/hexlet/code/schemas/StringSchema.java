@@ -13,7 +13,7 @@ public final class StringSchema extends BaseSchema<String> {
     }
 
     public StringSchema contains(String substring) {
-        addCheck(str -> str.contains(substring));
+        addCheck(str -> substring == null || substring.isEmpty() || str.contains(substring));
         return this;
     }
 
