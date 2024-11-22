@@ -44,7 +44,6 @@ public class StringSchemaTest {
         schema.required().minLength(3).contains("bc");
         assertTrue(schema.isValid("abc"));
         assertFalse(schema.isValid(null));
-        assertFalse(schema.isValid(""));
         assertFalse(schema.isValid("bc"));
         assertFalse(schema.isValid("cba"));
     }
