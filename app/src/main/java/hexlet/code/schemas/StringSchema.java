@@ -4,7 +4,7 @@ public final class StringSchema extends BaseSchema<String> {
 
     public StringSchema required() {
         addNonNullCheck();
-        addCheck("isEmpty", str -> !str.isEmpty());
+        addCheck("notEmpty", str -> !str.isEmpty());
         return this;
     }
 
