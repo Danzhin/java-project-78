@@ -2,6 +2,7 @@ package hexlet.code.schemas;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public class BaseSchema<T> {
@@ -10,6 +11,10 @@ public class BaseSchema<T> {
 
     public final void addCheck(String checkName, Predicate<T> condition) {
         checks.put(checkName, condition);
+    }
+
+    public final void addNonNullCheck() {
+        checks.put("nonNull", Objects::nonNull);
     }
 
     public final boolean isValid(T value) {
