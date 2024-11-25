@@ -15,7 +15,7 @@ public final class NumberSchema extends BaseSchema<Integer> {
     }
 
     public NumberSchema range(int minValue, int maxValue) {
-        addCheck("range", num -> minValue <= num && num <= maxValue);
+        addCheck("range", num -> num == null || (minValue <= num && num <= maxValue));
         return this;
     }
 

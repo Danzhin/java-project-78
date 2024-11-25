@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class NumberSchemaTest {
+public final class NumberSchemaTest {
 
     private final Validator validator = new Validator();
     private NumberSchema schema;
@@ -35,6 +35,7 @@ public class NumberSchemaTest {
     @Test
     public void rangeTest() {
         schema.range(0, 1);
+        assertTrue(schema.isValid(null));
         assertTrue(schema.isValid(1));
         assertFalse(schema.isValid(2));
     }
