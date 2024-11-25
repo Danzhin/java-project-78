@@ -47,4 +47,32 @@ public class NumberSchemaTest {
         assertFalse(schema.isValid(2));
     }
 
+    @Test
+    public void testNumberValidator() {
+        var v = new Validator();
+        var schema = v.number();
+
+        assertTrue(schema.isValid(5));
+        assertTrue(schema.isValid(null));
+
+        schema.positive();
+        assertTrue(schema.isValid(null));
+
+        schema.required();
+        assertFalse(schema.isValid(null));
+        assertFalse(schema.isValid(-10));
+        assertFalse(schema.isValid(0));
+        assertTrue(schema.isValid(10));
+
+        schema.range(5, 10);
+        assertTrue(schema.isValid(5));
+        assertTrue(schema.isValid(10));
+        assertFalse(schema.isValid(4));
+        assertFalse(schema.isValid(11));
+
+        schema.range(6, 9);
+        assertFalse(schema.isValid(5));
+        assertFalse(schema.isValid(10));
+    }
+
 }
