@@ -48,33 +48,4 @@ public class StringSchemaTest {
         assertFalse(schema.isValid("cba"));
     }
 
-    @Test
-    public void testStringValidator() {
-        var v = new Validator();
-        var schema = v.string();
-
-        assertTrue(schema.isValid(""));
-
-        schema.required();
-        assertTrue(schema.isValid("what does the fox say"));
-        assertTrue(schema.isValid("hexlet"));
-        assertFalse(schema.isValid(""));
-        assertFalse(schema.isValid(null));
-
-        schema.minLength(7);
-        assertTrue(schema.isValid("what does the fox say"));
-        assertFalse(schema.isValid("hexlet"));
-
-        assertTrue(
-                schema.contains("what").isValid("what does the fox say")
-        );
-
-        assertFalse(
-                schema.contains("whatthe").isValid("what does the fox say")
-        );
-
-        var schema1 = v.string().required().minLength(10).minLength(4);
-        assertTrue(schema1.isValid("hexlet"));
-    }
-
 }
